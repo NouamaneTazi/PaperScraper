@@ -28,14 +28,18 @@ class BaseScraper(ABC):
         #TODO test for error in retrieving url
         soup = BeautifulSoup(driver.page_source, 'html.parser')
 
+        # print(soup.prettify())
+        print(soup.text)
+
         return OrderedDict({
-            'title':self.get_title(soup),
-            'authors': self.get_authors(soup),
-            'keywords': self.get_keywords(soup),
-            'abstract': self.get_abstract(soup),
-            'body': self.get_body(soup),
-            'doi':self.get_doi(soup),
-            'pdf_url':self.get_pdf_url(soup)
+            # 'title':self.get_title(soup),
+            # 'authors': self.get_authors(soup),
+            # 'keywords': self.get_keywords(soup),
+            # 'abstract': self.get_abstract(soup),
+            # 'body': self.get_body(soup),
+            # 'doi':self.get_doi(soup),
+            # 'pdf_url':self.get_pdf_url(soup),
+            'images':self.get_images(soup)
         })
 
     def is_correct_url(self,url):

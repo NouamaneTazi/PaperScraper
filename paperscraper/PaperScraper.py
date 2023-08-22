@@ -37,13 +37,15 @@ class PaperScraper():
         options = webdriver.ChromeOptions()
         options.add_argument('headless')
 
-        webdriver_path = pkg_resources.resource_filename('paperscraper', 'webdrivers/chromedriver')
+        # webdriver_path = pkg_resources.resource_filename('paperscraper', 'webdrivers/chromedriver')
+        webdriver_path = pkg_resources.resource_filename('paperscraper', '/opt/homebrew/bin/chromedriver')
 
         if ('webdriver_path' is not None):
             self.webdriver_path = webdriver_path
 
-        self.driver = webdriver.Chrome(webdriver_path, options=options)
-
+        service = webdriver.chrome.service.Service()
+        # self.driver = webdriver.Chrome(webdriver_path, options=options)
+        self.driver = webdriver.Chrome(service=service, options=options)
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.driver.quit()
 

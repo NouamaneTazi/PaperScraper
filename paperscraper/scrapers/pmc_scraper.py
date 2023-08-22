@@ -45,4 +45,25 @@ class PMC(BaseScraper):
             'href']
 
     def get_title(self, soup):
-        return soup.find("h1", {"class": "content-title"}).getText()
+        pass
+        # return soup.find("h1", {"class": "content-title"}).getText()
+
+    def get_images(self, soup):
+        # find images with tags alts containing "chemical structure"
+        images = soup.findAll("img", alt=lambda x: x and "chemical structure" in x.lower())
+        # images = [image['src'] for image in images if image['src'].startswith("https") else self.website[0] + image['src']]
+        base_url = "https://www." + self.website[0]
+        images = [image['src'] if image['src'].startswith("https") else base_url + image['src'] for image in
+                  images]
+        
+        # download images to local directory
+        import requests
+        import os
+        local_dir = "images/"
+        os.makedirs(local_dir, exist_ok=True)
+        for image_url in images:
+            img_data = requests.get(image_url).content
+            with open(local_dir + "/" + image_url.split("/")[-1], 'wb') as handler:
+                handler.write(img_data)
+            
+
